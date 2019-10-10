@@ -15,7 +15,7 @@ module ActsAsSimpleTranslatable
       fields.each do |field|
         define_method "#{field}" do
           content = (I18n.locale == I18n.default_locale) ? super() : locale_translations[field]
-          content.present? ? content : super
+          content.present? ? content : super()
         end
 
         define_method "#{field}_original" do
