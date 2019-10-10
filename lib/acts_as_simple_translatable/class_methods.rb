@@ -13,13 +13,13 @@ module ActsAsSimpleTranslatable
 
       # Loop through fields to define methods such as "name" and "description"
       fields.each do |field|
-        define_method "#{field}" do |default_message = 'NO TRANSLATION'|
+        define_method "#{field}" do
           content = (I18n.locale == I18n.default_locale) ? super() : locale_translations[field]
-          content.present? || (I18n.locale == I18n.default_locale) ? content : default_message
+          content.present? ? content : super
         end
 
         define_method "#{field}_original" do
-          super()
+          self[field]
         end
 
         define_method "#{field}?" do
